@@ -1,0 +1,151 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Space Invaders</title>
+  <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+  <script src="highscore.js"></script>
+  <style type="text/css" media="screen">
+    body {
+      background: #000;
+    }
+
+    .invader-template,
+    .player-template {
+      display: none;
+    }
+
+    #game-wrap {
+      border: 3px double #666;
+      display: inline-block;
+      position: relative;
+    }
+
+    #code {
+      color: #fff;
+    }
+
+    @font-face {
+    	font-family: '8bitoperator_jve';
+    	src: url('fonts/8bitoperator_jve.eot');
+    	src: local('☺'), url('fonts/8bitoperator_jve.woff') format('woff'), url('fonts/8bitoperator_jve.ttf') format('truetype'), url('fonts/8bitoperator_jve.svg') format('svg');
+    	font-weight: normal;
+    	font-style: normal;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas" style="display: none"></canvas>
+  <textarea id="invader-blueprint" name="invader" rows="10" cols="10" style="display: none">
+000010010000
+100111111001
+101111111101
+101111111101
+101111111101
+111111111111
+000011110000
+000111111000
+001001100100
+  </textarea>
+  <div id="code"></div>
+  <div id="game-wrap">
+    <canvas id="game"></canvas>
+  </div>
+  <script src="spaceinvaders.js"></script>
+
+  <textarea class="invader-template" id="invader1">
+000100001000
+000010010000
+001111111100
+001111111100
+111111111111
+101111111101
+101111111101
+000010010000
+000100001000
+  </textarea>
+  <textarea class="invader-template" id="invader6">
+000011110000
+011111111110
+111111111111
+111001100111
+111111111111
+000111111000
+001101101100
+110000000011
+  </textarea>
+  <textarea class="invader-template" id="invader2">
+000011110000
+001111111100
+111111111111
+111001100111
+111111111111
+111111111111
+000101101000
+001010010100
+010001100010
+  </textarea>
+  <textarea class="invader-template" id="invader3">
+000010010000
+100111111001
+101101101101
+101111111101
+111111111111
+000011110000
+000111111000
+001001100100
+010000000010
+  </textarea>
+  <textarea class="invader-template" id="invader4">
+0000110000
+0001111000
+0011111100
+0110110110
+0111111110
+0001111000
+0010000100
+0100000010
+  </textarea>
+  <textarea class="invader-template" id="invader7">
+00100000100
+10010001001
+10111111101
+11101110111
+01111111110
+01111111110
+00100000100
+01000000010
+  </textarea>
+  <textarea class="invader-template" id="invader5">
+10100101
+01011010
+00111100
+00100100
+  </textarea>
+  <textarea class="invader-template" id="invader8">
+00100000100
+00010001000
+00111111100
+01101110110
+11111111111
+10111111101
+10100000101
+00011011000
+  </textarea>
+  <textarea class="invader-template" id="mothership">
+000011000
+0011111100
+1111111111
+1100110011
+0111111110
+  </textarea>
+  <textarea class="player-template" id="player-template">
+00000100000
+00001110000
+01111111110
+11111111111
+11111111111
+11111111111
+  </textarea>
+</body>
+</html>
