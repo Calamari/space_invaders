@@ -826,7 +826,7 @@ var Game = function(canvas, config) {
         }
       }
 
-      if (mothership && (mothership.x > canvas.width + 20 || mothership.x < mothership.boundingBox.width - 20)) {
+      if (mothership && (mothership.x > canvas.width + mothership.boundingBox.width || mothership.x < - mothership.boundingBox.width)) {
         // we missed the mothership
         mothership = null;
       }
