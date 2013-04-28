@@ -770,6 +770,12 @@ var Game = function(canvas, config) {
           --numInvaders;
         }
       }
+
+      if (canon && canon.isHit(invader)) {
+        canon.explode(particles);
+        canon = null;
+      }
+
       return keepIt;
     });
 
