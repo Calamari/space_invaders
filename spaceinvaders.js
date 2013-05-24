@@ -926,14 +926,3 @@ $(document).ready(function() {
     }
   });
 });
-/**
-  TODOs:
-  touchstart/move/stop events for mobile usage
-  store scores + leaderboard??
-  count plays
-  loose if invaders reach bottom
-  animations
-
-  maybe in second version:
-    bunkers
-*/
