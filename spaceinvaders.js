@@ -428,6 +428,8 @@
         // allow looping
         doLoop       = true,
         ended        = false,
+        // game is stopped completely
+        isStopped    = false,
 
         // written Texts on screen
         screenObjects = [],
@@ -518,6 +520,14 @@
         enemyShootProbability += incEnemyShootProb;
         speed += incEnemySpeed;
       }
+    }
+
+    /**
+     * Completely stops the game
+     */
+    function stop() {
+      $(win).off('keydown keyup', keyHandler);
+      isStopped = true;
     }
 
     function removeScreenObject(obj) {
@@ -698,6 +708,7 @@
     }
 
     function loop() {
+      if (isStopped) { return; }
       ctx.clearRect(0,0, canvas.width, canvas.height);
       var loopTime  = new Date(),
           timeDiff  = (loopTime - lastLoopTime) / 1000, // in ms
@@ -871,6 +882,13 @@
       doLoop && win.requestAnimFrame(loop);
   //        doLoop && setTimeout(loop, 1000 / 30);
     }
+
+    /**
+     * Public interface of that game
+     */
+    return {
+      stop: stop
+    };
   };
 
   $(doc).ready(function() {
@@ -901,7 +919,7 @@
     gameCanvas.width  = 500;
     gameCanvas.height = 400;
 
-    new Game(gameCanvas, {
+    var game = new Game(gameCanvas, {
       pixelSize:    3,
       bulletSize:   3,
 
