@@ -891,35 +891,12 @@
     };
   };
 
-  $(doc).ready(function() {
-    var canvas = doc.getElementById('canvas'),
-        ctx    = canvas.getContext('2d'),
-        color  = '255,0,0',
-        PIXEL_SIZE = 10,
-        MAX_PIXEL  = 12;
-    canvas.width = MAX_PIXEL * PIXEL_SIZE;
-    canvas.height = MAX_PIXEL * PIXEL_SIZE;
-    var invader = new Invader(canvas, {
-      blueprint: $('#invader-blueprint').val(),
-      color:     color,
-      maxWidth:  MAX_PIXEL,
-      maxHeight: MAX_PIXEL,
-      pixelSize: PIXEL_SIZE,
-      x: 0, y: 0
-    });
-    var codeDiv = $('#code');
-    $('#invader-blueprint').keyup(function() {
-      ctx.clearRect(0,0, canvas.width, canvas.height);
-      invader.blueprint = $('#invader-blueprint').val();
-      invader.redraw();
-      codeDiv.html(EightBit.encode(invader.blueprint));
-    });
-
-    var gameCanvas = doc.getElementById('game');
+  win.SpaceInvaders = function SpaceInvaders(canvasId, config) {
+    var gameCanvas = typeof canvasId === 'string' ? doc.getElementById(canvasId) : canvasId;
     gameCanvas.width  = 500;
     gameCanvas.height = 400;
 
-    var game = new Game(gameCanvas, {
+    return new Game(gameCanvas, {
       pixelSize:    3,
       bulletSize:   3,
 
@@ -949,5 +926,7 @@
         points:       20
       }
     });
-  });
+  };
+  win.SpaceInvaders.Game = Game;
+  win.SpaceInvaders.Invader = Invader;
 }(window, document, jQuery));
