@@ -609,10 +609,10 @@
         if (index > -1) {
           screenObjects.splice(index, 1);
         }
-  //         setTimeout(function() {
-          ended = true;
+        ended = true;
+        if (config.highscore) {
           enterHighscore();
-  //          }, 500);
+        }
       }, 3000);
 
     }
@@ -668,11 +668,13 @@
     }
 
     function sendHighscore(name) {
-      highscore = new jaz.Highscore('space_invaders', 'http://localhost:8181');
-      if (name) {
-        highscore.set(name, score);
+      if (config.highscore) {
+        highscore = new jaz.Highscore('space_invaders', config.highscore);
+        if (name) {
+          highscore.set(name, score);
+        }
+        setTimeout(getHighscore, 50);
       }
-      setTimeout(getHighscore, 50);
     }
 
     function getHighscore() {
@@ -914,6 +916,8 @@
       invaderBase:  12,
       gutter:       20,
       offset:       60,
+
+      highscore:    config && config.highscore,
 
       mothership:   {
         blueprint:    '48,252,1023,819,510',
