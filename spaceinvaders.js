@@ -1,4 +1,4 @@
-(function(win, doc, $) {
+(function(win, doc) {
   'use strict';
   /**
    * A remake of the famous space invaders
@@ -257,7 +257,7 @@
 
   var Text = function(canvas, text, config) {
     config = config || {};
-    $.extend(this, config);
+    Object.assign(this, config);
     this.element = canvas;
 
     this.setText(text);
@@ -272,7 +272,7 @@
 
   var Canon = function(canvas, config) {
     config = config || {};
-    $.extend(this, config);
+    Object.assign(this, config);
     this.blueprint = EightBit.decode(this.blueprint, this.base);
     this.element = canvas;
 
@@ -291,7 +291,7 @@
     var element = doc.createElement('canvas');
     config = config || {};
     this.points = 1;
-    $.extend(this, config);
+    Object.assign(this, config);
     element.width = this.maxWidth * this.pixelSize;
     element.height = this.maxHeight * this.pixelSize;
     this.element = canvas;
@@ -319,7 +319,7 @@
   var Bullet = function(canvas, config) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    $.extend(this, config);
+    Object.assign(this, config);
     this.boundingBox = { width: this.pixelSize, height: this.pixelSize };
   };
   Bullet.prototype.update = function(timeDiff) {
@@ -475,7 +475,8 @@
           numRows = 0,
           color; // width of greatest row
       // create invaders
-      $.each(config.invaders, function(type, code) {
+      Object.keys(config.invaders).forEach(function(type) {
+        var code = config.invaders[type];
         invaderRow = [];
         if (++numRows > level+2) { return; }
         color = possibleColors[Math.floor(Math.random()*possibleColors.length)];
@@ -506,7 +507,8 @@
           y:         canvas.height - 30
         });
 
-        $(win).on('keydown keyup', keyHandler);
+        win.addEventListener('keydown', keyHandler);
+        win.addEventListener('keyup', keyHandler);
 
         /*var one = true;
         win.ondevicemotion = function(event) {
@@ -526,12 +528,13 @@
      * Completely stops the game
      */
     function stop() {
-      $(win).off('keydown keyup', keyHandler);
+      win.removeEventListener('keydown', keyHandler);
+      win.removeEventListener('keyup', keyHandler);
       isStopped = true;
     }
 
     function removeScreenObject(obj) {
-      var index = $.inArray(obj, screenObjects);
+      var index = screenObjects.includes(obj);
       if (index > -1) {
         screenObjects.splice(index, 1);
       }
@@ -605,7 +608,7 @@
       ended = true;
       setTimeout(function() {
         obj.explode(particles);
-        var index = $.inArray(obj, screenObjects);
+        var index = screenObjects.includes(obj);
         if (index > -1) {
           screenObjects.splice(index, 1);
         }
@@ -640,8 +643,11 @@
     }
 
     function startEnterName(cb) {
-      nameInput = $('<input type="text" style="position:absolute;left:-9999px" id="playerName">');
-      $("body").append(nameInput);
+      nameInput = document.createElement('input')
+      nameInput.type = 'text'
+      nameInput.style = 'position:absolute;left:-9999px'
+      nameInput.id = 'playerName'
+      document.body.appendChild(nameInput);
       nameInput.focus().on('keyup', function(event) {
         enterName(nameInput.val());
         if (event.which === 13) {
@@ -692,7 +698,7 @@
         screenObjects.push(obj);
       }
       writeLine("HIGHSCORE", 20);
-      $.each(items, function(i, item) {
+      items.forEach(function(item, i) {
         var line = i<9 ? '0' : '';
         line += (i+1) + '.  ';
         line += (item.player + '            ').slice(0,12) + ' ';
@@ -754,7 +760,6 @@
       }
 
       // draw/move all bullets
-      //$.each(bullets, function(i, bullet) { bullet && bullet.update(timeDiff); });
       for (i=bullets.length; i--;) {
         if (!bullets[i].update(timeDiff)) {
           bullets.splice(i, 1);
@@ -768,7 +773,6 @@
       }
 
       // draw/move all particles
-      //$.each(particles, function(i, particle) { if (particle && !particle.update(timeDiff)) { particle = null }; });
       for (i=particles.length; i--;) {
         if (!particles[i].update(timeDiff)) {
           particles.splice(i, 1);
@@ -933,4 +937,4 @@
   };
   win.SpaceInvaders.Game = Game;
   win.SpaceInvaders.Invader = Invader;
-}(window, document, jQuery));
+}(window, document));
